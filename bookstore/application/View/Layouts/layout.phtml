@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title><?php echo $this->pageTitle?></title>
+<meta property="og:title" content="<?php echo $this->pageTitle?>" />
+<?php echo $this->render('head.phtml')?>
+</head>
+
+<body style="">
+<?php ?>
+
+<div>
+	
+    
+    <?php echo $this->render('header.phtml');
+	?>
+    
+    <div class="container_wrap">
+	    <div class="container">
+		    <?php if(@$_SESSION['error_message']):?>
+		    <?php echo $_SESSION['error_message'];
+		    
+		    unset($_SESSION['error_message'])?>
+		    <?php endif?>
+		    
+	    	<?php echo $this->layout->content; ?>
+	    
+	   </div>
+    </div>
+    
+</div>
+
+ 
+
+	
+
+
+
+
+
+</body>
+
+
+
+</html>    
+    

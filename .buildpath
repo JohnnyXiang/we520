@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="src" path="ch1"/>
+	<buildpathentry kind="src" path="ch3"/>
+	<buildpathentry kind="src" path="ch4"/>
+	<buildpathentry kind="src" path="ch5"/>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+</buildpath>
