@@ -122,10 +122,15 @@ class Bootstrap {
 			
 			if (BASEURL) {
 				$uri = str_replace ( BASEURL, '', $uri );
-			}
-			$uri = str_replace ( '.php', '', $uri );
+			}			
+			
+			//$uri = str_replace ( '.php', '', $uri );
 			
 			$uri = strtolower ( trim ( $uri, '/\\' ) );
+			
+			if(strpos($uri,'.php')!==false){
+				$uri = 'index';
+			}
 			
 			if (empty ( $uri )) {
 				$uri = 'index';
@@ -151,8 +156,11 @@ class Bootstrap {
 		}
 		
 		
+		$action = null;
+		
 		if(!class_exists($controller)){
-			throw new Exception('Page not found.');
+			//throw new Exception('Page not found.');
+			$controller = 'Controller_Errors';
 		}
 		
 		$index = new $controller ();

@@ -1,9 +1,15 @@
 <?php
 abstract class Controller_Admin_Abstract extends  Controller_Abstract{
+	protected $_guestAllowedActions = array();
 	
 	protected function _init() {
 		parent::_init();
-		$this->layout->setLayout('admin');		
+		$this->layout->setLayout('admin');	
+		if(!$this->_isLoggedIn() && !in_array($this->action,$this->_guestAllowedActions)){
+			$this->redirect('admin.php?controller=index&action=login');
+		}	
+		
+		$this->view->admin = $this->_session->getData('admin');
 	}
 	
 	
@@ -18,4 +24,8 @@ abstract class Controller_Admin_Abstract extends  Controller_Abstract{
 		return $this->renderScript;
 	}
 	
+	
+	protected function _isLoggedIn(){
+		return $this->_session->getData('admin') && $this->_session->getData('admin')->getId();
+	}
 }

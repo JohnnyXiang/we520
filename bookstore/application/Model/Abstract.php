@@ -2,6 +2,12 @@
 abstract class Model_Abstract extends Zend_Db_Table_Row_Abstract {
 	protected $_tbModel;
 	protected $_resourceModel;
+	/**
+	 * Object attributes
+	 *
+	 * @var array
+	 */
+	protected $_xdata = array();
 	
 	/**
 	 * Name of object id field
@@ -118,7 +124,11 @@ abstract class Model_Abstract extends Zend_Db_Table_Row_Abstract {
 	 * @return Varien_Object
 	 */
 	public function setData($key, $value = null) {
-		parent::__set($key, $value);
+		try{
+			parent::__set($key, $value);
+		}catch(Exception $e){
+			$this->_data [$key] = $value;
+		}
 		
 		return $this;
 	}
@@ -267,7 +277,7 @@ abstract class Model_Abstract extends Zend_Db_Table_Row_Abstract {
 		return $this->getData ( $var );
 	}
 	
-
+	
 	
 	/**
 	 * checks whether the object is empty

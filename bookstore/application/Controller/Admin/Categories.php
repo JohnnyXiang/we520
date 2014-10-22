@@ -22,7 +22,7 @@ class Controller_Admin_Categories extends Controller_Admin_Abstract {
 	}
 	function addAction() {
 		
-		if (! empty ( $_POST ['category_name'] )) {
+		if(App::isRequestPost()){
 			$category = $this->getModel ( 'category' )->load ();
 			
 			$image = '';
@@ -79,10 +79,7 @@ class Controller_Admin_Categories extends Controller_Admin_Abstract {
 		$category = $this->_initCategory();
 		
 		
-		if (! empty ( $_POST ['category_name'] )) {
-			
-			
-			
+		if (! empty ( $_POST ['category_name'] )) {		
 			
 			try {
 				
