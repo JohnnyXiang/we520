@@ -1,0 +1,130 @@
+<div class="content-box-large">
+			  				<div class="panel-heading">
+					            <div class="panel-title">Add a New Product</div>					       
+					        </div>
+			  				<div class="panel-body">
+			  					<form class="form-horizontal" role="form"  method="post" enctype="multipart/form-data">
+								  <div class="form-group">
+								    <label for="name" class="col-sm-2 control-label">Product Name</label>
+								    <div class="col-sm-10">
+								      <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?php echo @$this->postData['name']?>" required>
+								    </div>
+								  </div>
+								  
+								  <div class="form-group">
+								    <label class="col-sm-2 control-label">Desciption</label>
+								    <div class="col-sm-10">
+								      <textarea class="form-control" name="description" required placeholder="Description" rows="6"><?php echo @$this->postData['description']?></textarea>
+								    </div>
+								  </div>
+								  
+								  <div class="form-group">
+								    <label class="col-sm-2 control-label">Short Desciption</label>
+								    <div class="col-sm-10">
+								      <textarea class="form-control" name="short_description" required placeholder="Short Description" rows="3"><?php echo @$this->postData['short_description']?></textarea>
+								    </div>
+								  </div>
+								  
+								  <div class="form-group">
+								    <label for="position" class="col-sm-2 control-label">ISBN</label>
+								    <div class="col-sm-10">
+								      <input type="text" class="form-control" id="isbn" name="isbn" placeholder="ISBN" value="<?php echo @$this->postData['isbn']?>">
+								    </div>
+								  </div>
+								  
+								  <div class="form-group">
+								    <label for="author" class="col-sm-2 control-label">Author</label>
+								    <div class="col-sm-10"> 
+								      <input type="text" class="form-control" id="author" required  name="author" placeholder="Author" value="<?php echo @$this->postData['author']?>">
+								    </div>
+								  </div>
+								  
+								  <div class="form-group">
+								    <label for="" class="col-sm-2 control-label">Publish Year</label>
+								    <div class="col-sm-10">
+								      	<select name="publish_year" required>
+								      		<option> - Select - </option>
+								      		<?php for($i=date('Y');$i>=1900;$i--):?>
+								      		<option value="<?php echo $i?>"><?php echo $i?></option>								 
+								      		<?php endfor;?>
+								      	</select>
+								    </div>
+								  </div>
+								  
+								   <div class="form-group">
+								    <label for="position" class="col-sm-2 control-label">Price</label>
+								    <div class="col-sm-10">
+								      <input type="text" class="form-control" required id="price" name="price" placeholder="Price" value="<?php echo @$this->postData['price']?>">
+								    </div>
+								  </div>
+								  
+								  <div class="form-group">
+								    <label for="position" class="col-sm-2 control-label">Sale Price</label>
+								    <div class="col-sm-10">
+								      <input type="text" class="form-control" id="sale_price" name="sale_price" placeholder="Sale Price" value="<?php echo @$this->postData['sale_price']?>">
+								    </div>
+								  </div>
+								
+								 <div class="form-group">
+								    <label for="position" class="col-sm-2 control-label">Categories</label>
+								    <div class="col-sm-10">
+								      	<div class="checkbox">
+								      	<?php foreach($this->categories as $category):?>
+								      	<label>								       
+								          <input type="checkbox" name="categories[]" value="<?php echo $category->getId()?>"> <?php echo $category->getCategoryName()?>
+								        </label>
+								      	<?php endforeach;?>
+								      	</div>
+								    </div>
+								  </div>
+								  
+								  <div class="form-group">
+								    <label for="position" class="col-sm-2 control-label">Product Images</label>
+								    <div class="col-sm-10" id="product-images">
+								    	<label>	<input type="file" name="images[]" required class="btn btn-default btn-inline"> </label>				    	
+								    	
+								    </div>
+								    
+								    <div class="col-sm-offset-2 col-sm-10">
+								    <a href="" class="addImage">add another image</a>
+								    </div>
+								    
+								    
+								  </div>  
+								 
+								  <div class="form-group">
+								  	<label class="col-md-2 control-label">Status</label>
+								    <div class="col-sm-10">
+								      <div class="checkbox">
+								        <label>
+								          <input type="hidden" name="status" value="0"/>
+								          <input type="checkbox" name="status" value="1" checked> Enabled
+								        </label>
+								      </div>
+								      
+								    </div>
+								  </div>
+								  <div class="form-group">
+								    <div class="col-sm-offset-2 col-sm-10">
+								      <button type="submit" class="btn btn-primary">Submit</button>
+								    </div>
+								  </div>
+								</form>
+			  				</div>
+</div>
+<style>
+<!--
+
+-->
+</style>
+<script>
+jQuery(document).ready(function(){
+	jQuery('.addImage').click(function(){
+		var line = jQuery('#product-images label').last();
+		var cloned = line.clone();
+		line.append('<a onclick="jQuery(this).parent().remove();return false;">Remove</a>');
+		jQuery('#product-images').append(cloned);
+		return false;
+	})
+})
+</script>

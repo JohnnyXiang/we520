@@ -1,0 +1,48 @@
+<div class="content-box-large">
+  				<div class="panel-heading">
+					<div class="panel-title">Products</div>
+				</div>
+  				<div class="panel-body">
+  					<div class="table-responsive">
+  						<table class="table">
+			              <thead>
+			                <tr>
+			                  <th>#</th>
+			                  <th>Name</th>
+			                  <th>ISBN</th>
+			                  <th>Price</th>
+			                  <th>Status</th>
+			                  <th>Actions</th>
+			                </tr>
+			              </thead>
+			              <tbody>
+			                <?php if($this->products):?>
+			                <?php foreach($this->products as $product):?>
+			                <tr>
+			                  <td><?php echo $product->getId()?></td>
+			                  <td><?php echo $product->getName()?></td>
+			                  <td><?php echo $product->getIsbn()?></td>
+			                  <td><?php echo $product->getPrice()?></td>
+			                  <td><?php echo $product->getStatus()==Model_Product::STATUS_ENABLED?'Enabled':'Disabled';?></td>
+			                  <td>
+			                  <button class="btn btn-primary" onclick="window.location='<?php echo BASEURL?>/admin.php?controller=products&action=edit&id=<?php echo $product->getId()?>'"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
+			                  <button class="btn btn-danger" onclick="return confirmDelete('<?php echo BASEURL?>/admin.php?controller=products&action=delete&id=<?php echo $product->getId()?>','Are you sure to delete this category?')"><i class="glyphicon glyphicon-remove"></i> Delete</button>
+			                  </td>
+			                </tr>
+			               <?php endforeach?>
+			               <?php endif?>
+			              </tbody>
+			            </table>
+  					</div>
+  					
+  					<div>
+  					<div class="btn-group">
+                     	<?php $page = 0; for($i=0;$i<=$this->totalCount;$i=$i+$this->numberPerPage):$page++;?>  
+                     	<a href="<?php echo BASEURL?>/admin.php?controller=products&action=index&page=<?php echo $page?>"><?php echo $page?></a>
+                     	<?php endfor?>
+                    </div>
+  					</div>
+  					
+  					<button class="btn btn-info btn-lg" onclick="window.location='<?php echo BASEURL?>/admin.php?controller=products&action=add'">Add New Product</button>
+  				</div>
+</div>
