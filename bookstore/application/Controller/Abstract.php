@@ -20,6 +20,7 @@ abstract class Controller_Abstract {
 		$this->layout = Zend_Registry::get ( 'layout' );
 		$this->view->pageTitle = DEFAULT_PAGE_TITLE;
 		$this->_session = $this->getModel ( 'Session' );
+		$this->view->session = $this->_session;
 	}
 	
 	/*
