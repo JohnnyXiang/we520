@@ -31,6 +31,7 @@ class Controller_Admin_Products extends Controller_Admin_Abstract {
 						'short_description'=>'Short Description',
 						'isbn'=>'ISBN',
 						'author'=>"Author",
+						'publish_year'=>'Publish Year',
 						'price'=>"Price");
 				
 				foreach ($required_fieds as $key=>$fieldName){
@@ -108,6 +109,7 @@ class Controller_Admin_Products extends Controller_Admin_Abstract {
 						'short_description'=>'Short Description',
 						'isbn'=>'ISBN',
 						'author'=>"Author",
+						'publish_year'=>'Publish Year',
 						'price'=>"Price");
 		
 				foreach ($required_fieds as $key=>$fieldName){
@@ -117,10 +119,6 @@ class Controller_Admin_Products extends Controller_Admin_Abstract {
 				}
 		
 		
-		
-		
-		
-				$product = $this->getModel ( 'product' )->load ();
 					
 				foreach ($required_fieds as $key=>$fieldName){
 					$product->setData ( $key,App::getParam($key));
@@ -133,6 +131,10 @@ class Controller_Admin_Products extends Controller_Admin_Abstract {
 				if(!empty($_FILES['images']['name'][0])){
 					$this->_uploadProductImage($product,$_FILES['images']);
 				}
+				
+				if(App::getParam('deleted_image')){
+					$product->deleteImages(App::getParam('deleted_image'));
+				}
 		
 				//save categories
 				$product->setCategories(App::getParam('categories'));
@@ -143,6 +145,10 @@ class Controller_Admin_Products extends Controller_Admin_Abstract {
 			} catch ( Exception $e ) {
 				$this->flashMessage ( $e->getMessage () ,'error');
 			}
+			
+			$this->view->postData = App::getParams();
+		}else{
+			$this->view->postData = $product->toArray();
 		}
 		
 	
@@ -154,15 +160,15 @@ class Controller_Admin_Products extends Controller_Admin_Abstract {
 	}
 	function deleteAction(){
 		try {
-			$category = $this->_initCategory();
-			$category->delete();
-			$this->flashMessage ( 'Category has been deleted successfully.' );
+			$product = $this->_initProduct();
+			$product->delete();
+			$this->flashMessage ( 'Product has been deleted successfully.' );
 		
 		} catch ( Exception $e ) {
 			$this->flashMessage ( $e->getMessage () );
 		}
 		
-		$this->redirect ( BASEURL . '/admin.php?controller=categories' );
+		$this->redirect ( BASEURL . '/admin.php?controller=products' );
 		
 	}
 	private function _uploadProductImage($product,$files) {

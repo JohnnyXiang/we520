@@ -1,6 +1,6 @@
 <div class="content-box-large">
 			  				<div class="panel-heading">
-					            <div class="panel-title">Add a New Product</div>					       
+					            <div class="panel-title">Edit a New Product</div>					       
 					        </div>
 			  				<div class="panel-body">
 			  					<form class="form-horizontal" role="form"  method="post" enctype="multipart/form-data">
@@ -42,10 +42,11 @@
 								  <div class="form-group">
 								    <label for="" class="col-sm-2 control-label">Publish Year</label>
 								    <div class="col-sm-10">
+								 
 								      	<select name="publish_year" required>
 								      		<option> - Select - </option>
 								      		<?php for($i=date('Y');$i>=1900;$i--):?>
-								      		<option value="<?php echo $i?>"  <?php if($i==$this->postData['publish_year']):?>selected<?php endif?>><?php echo $i?></option>								 
+								      		<option value="<?php echo $i?>" <?php if($i==$this->postData['publish_year']):?>selected<?php endif?>><?php echo $i?></option>								 
 								      		<?php endfor;?>
 								      	</select>
 								    </div>
@@ -71,7 +72,7 @@
 								      	<div class="checkbox">
 								      	<?php foreach($this->categories as $category):?>
 								      	<label>								       
-								          <input type="checkbox" name="categories[]" value="<?php echo $category->getId()?>"> <?php echo $category->getCategoryName()?>
+								          <input  <?php if(in_array($category->getId(),$this->postData['category_ids'])):?>checked<?php endif?> type="checkbox" name="categories[]" value="<?php echo $category->getId()?>"> <?php echo $category->getCategoryName()?>
 								        </label>
 								      	<?php endforeach;?>
 								      	</div>
@@ -81,7 +82,12 @@
 								  <div class="form-group">
 								    <label for="position" class="col-sm-2 control-label">Product Images</label>
 								    <div class="col-sm-10" id="product-images">
-								    	<label>	<input type="file" name="images[]" required class="btn btn-default btn-inline"> </label>				    	
+								    	<?php foreach ($this->postData['images'] as $image):?>
+								    	<p><img src="<?php echo MEDIA_URL.'/catalog/product/'.$image->path?>" width=100>
+								    	 <label>	<input type="checkbox" name="deleted_image[]" value="<?php echo $image->image_id?>"> delete</label>
+								    	</p>
+								    	<?php endforeach;?>
+								    	<label>	<input type="file" name="images[]"  class="btn btn-default btn-inline"> </label>				    	
 								    	
 								    </div>
 								    
