@@ -24,15 +24,17 @@ class Controller_Admin_Products extends Controller_Admin_Abstract {
 	function addAction() {
 		
 		if(App::isRequestPost()){
-			
+			//var_dump(App::getParam('categories'));die();
 			try {
-				$required_fieds = array('name'=>'Product Name',
+				$required_fieds = array(
+				'name'=>'Product Name',
 						'description'=>'Description',
 						'short_description'=>'Short Description',
 						'isbn'=>'ISBN',
 						'author'=>"Author",
 						'publish_year'=>'Publish Year',
-						'price'=>"Price");
+						'price'=>"Price"
+				);
 				
 				foreach ($required_fieds as $key=>$fieldName){
 					if (!App::getParam($key)) {
@@ -40,7 +42,7 @@ class Controller_Admin_Products extends Controller_Admin_Abstract {
 					}
 				}
 				
-				
+				//throw new Exception ( 'test.' );
 				
 				
 				
@@ -66,10 +68,12 @@ class Controller_Admin_Products extends Controller_Admin_Abstract {
 				$this->redirect ( BASEURL . '/admin.php?controller=products' );
 			} catch ( Exception $e ) {
 				$this->flashMessage ( $e->getMessage () ,'error');
+				
+				$this->view->postData = App::getParams();
 			}
 		}
 		
-		$this->view->postData = App::getParams();
+		
 		
 		$this->view->categories = $this->getDbTableModel ( 'category' )->fetchAll (
 				$this->getDbTableModel ( 'category' )->select()->order('category_name asc')
@@ -90,7 +94,7 @@ class Controller_Admin_Products extends Controller_Admin_Abstract {
 		
 		$product = $this->getModel ( 'product' )->load ( $id );
 		
-		if (! $product->getId ()) {
+		if (!$product || ! $product->getId ()) {
 			$this->error ( 'ID is not valid.' );
 		}
 		
@@ -158,6 +162,10 @@ class Controller_Admin_Products extends Controller_Admin_Abstract {
 		);
 		
 	}
+	
+	/**
+	 * delete product action
+	 */
 	function deleteAction(){
 		try {
 			$product = $this->_initProduct();

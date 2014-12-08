@@ -74,6 +74,7 @@
 								      	<label>								       
 								          <input  <?php if(in_array($category->getId(),$this->postData['category_ids'])):?>checked<?php endif?> type="checkbox" name="categories[]" value="<?php echo $category->getId()?>"> <?php echo $category->getCategoryName()?>
 								        </label>
+								        <br>
 								      	<?php endforeach;?>
 								      	</div>
 								    </div>
